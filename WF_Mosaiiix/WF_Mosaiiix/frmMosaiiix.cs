@@ -36,7 +36,8 @@ namespace WF_Mosaiiix
 
         private void btnLaunchProcess_Click(object sender, EventArgs e)
         {
-            image.GetColors(10);
+            pcbDrew.Image = null;
+            image.GetNeighborsColors(10,10);
             pcbDrew.Image = image.ImgModified;
         }
     }

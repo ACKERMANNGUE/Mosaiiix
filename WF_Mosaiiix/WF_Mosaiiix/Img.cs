@@ -77,43 +77,65 @@ namespace WF_Mosaiiix
         }
 
 
-        public unsafe void GetColors(int sizeGrid)
+        public unsafe void GetNeighborsColors(int sizeX, int sizeY)
         {
             ImgModified = Picture.ToBitmap();
-            int sizeCell = ImgModified.Width / sizeGrid;
+            int widthCell = (int)Math.Round((double)ImgModified.Width / sizeX);
+            int heightCell = (int)Math.Round((double)ImgModified.Height / sizeY);
 
             BitmapData xData = ImgModified.LockBits(
-                    new Rectangle(0, 0, ImgModified.Width, ImgModified.Height),
-                    ImageLockMode.ReadWrite,
-                    PixelFormat.Format24bppRgb);
+        new Rectangle(0, 0, ImgModified.Width, ImgModified.Height),
+        ImageLockMode.ReadWrite,
+        PixelFormat.Format24bppRgb);
 
             lock (balanceLock)
             {
                 byte* startPixel = (byte*)xData.Scan0.ToPointer();
                 int bitsPerPixel = Image.GetPixelFormatSize(xData.PixelFormat);
-                List<List<Color>> lstCells = new List<List<Color>>();
-                List<Color> lstColorsCell = new List<Color>();
 
-                for (var y = 0; y < ImgModified.Height; y++)
+                for (int y = 0; y < sizeY; y++)
                 {
-                    for (var x = 0; x < ImgModified.Width; x++)
+                    for (int x = 0; x < sizeX; x++)
                     {
-                        for (int i = -sizeCell / 2; i <= sizeCell / 2; i++)
+
+                        List<int> lstBlueCells = new List<int>();
+                        List<int> lstGreenCells = new List<int>();
+                        List<int> lstRedCells = new List<int>();
+                        for (int j = 0; j < heightCell; j++)
                         {
-                            for (int j = -sizeCell / 2; j <= sizeCell / 2; j++)
+                            for (int i = 0; i < widthCell; i++)
                             {
-                                if (x + i >= 0 && x + i < xData.Width && y + j >= 0 && y + j < xData.Height)
+                                int xPos = i + (x * widthCell);
+                                int yPos = j + (y * heightCell);
+
+                                if (xPos < ImgModified.Width && yPos < ImgModified.Height)
                                 {
-                                    Color color = GetPixelColor(x + i, y + j, xData, startPixel);
-                                    lstColorsCell.Add(color);
-                                    //SetPixelColor(x+i, y+j, startPixel, xData, color.B, color.G, color.R);
+                                    lstBlueCells.Add(GetPixelColor(xPos, yPos, xData, startPixel).B);
+                                    lstGreenCells.Add(GetPixelColor(xPos, yPos, xData, startPixel).G);
+                                    lstRedCells.Add(GetPixelColor(xPos, yPos, xData, startPixel).R);
+                                }
+                            }
+                        }
+                        int averageBlue = lstBlueCells.Count > 0 ? (int)lstBlueCells.Average() : 0;
+                        int averageGreen = lstGreenCells.Count > 0 ? (int)lstGreenCells.Average() : 0;
+                        int averageRed = lstRedCells.Count > 0 ? (int)lstRedCells.Average() : 0;
+
+                        for (int j = 0; j < heightCell; j++)
+                        {
+                            for (int i = 0; i < widthCell; i++)
+                            {
+                                int xPos = i + (x * widthCell);
+                                int yPos = j + (y * heightCell);
+                                if (xPos < ImgModified.Width && yPos < ImgModified.Height)
+                                {
+                                    SetPixelColor(xPos, yPos, xData, startPixel, averageBlue, averageGreen, averageRed);
                                 }
                             }
                         }
                     }
                 }
-                var a = lstColorsCell;
             }
+
             ImgModified.UnlockBits(xData);
         }
         private unsafe Color GetPixelColor(int x, int y, BitmapData xData, byte* pixel)
@@ -127,7 +149,7 @@ namespace WF_Mosaiiix
 
         }
 
-        private unsafe void SetPixelColor(int x, int y, byte* pixel, BitmapData xData, int b, int g, int r)
+        private unsafe void SetPixelColor(int x, int y, BitmapData xData, byte* pixel, int b, int g, int r)
         {
             int sizeRow = y * xData.Stride;
             int step = x * Image.GetPixelFormatSize(xData.PixelFormat) / 8;

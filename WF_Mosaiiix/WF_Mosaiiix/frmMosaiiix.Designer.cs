@@ -42,9 +42,10 @@
             // 
             // pcbInitialImage
             // 
+            this.pcbInitialImage.Image = global::WF_Mosaiiix.Properties.Resources.lena;
             this.pcbInitialImage.Location = new System.Drawing.Point(12, 22);
             this.pcbInitialImage.Name = "pcbInitialImage";
-            this.pcbInitialImage.Size = new System.Drawing.Size(300, 300);
+            this.pcbInitialImage.Size = new System.Drawing.Size(500, 500);
             this.pcbInitialImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pcbInitialImage.TabIndex = 1;
             this.pcbInitialImage.TabStop = false;
@@ -52,9 +53,9 @@
             // btnLoadInitialImage
             // 
             this.btnLoadInitialImage.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnLoadInitialImage.Location = new System.Drawing.Point(12, 328);
+            this.btnLoadInitialImage.Location = new System.Drawing.Point(12, 528);
             this.btnLoadInitialImage.Name = "btnLoadInitialImage";
-            this.btnLoadInitialImage.Size = new System.Drawing.Size(300, 67);
+            this.btnLoadInitialImage.Size = new System.Drawing.Size(500, 67);
             this.btnLoadInitialImage.TabIndex = 2;
             this.btnLoadInitialImage.Text = "Charger Image de base";
             this.btnLoadInitialImage.UseVisualStyleBackColor = true;
@@ -63,9 +64,9 @@
             // btnLoadSetOfImages
             // 
             this.btnLoadSetOfImages.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnLoadSetOfImages.Location = new System.Drawing.Point(318, 328);
+            this.btnLoadSetOfImages.Location = new System.Drawing.Point(518, 528);
             this.btnLoadSetOfImages.Name = "btnLoadSetOfImages";
-            this.btnLoadSetOfImages.Size = new System.Drawing.Size(300, 67);
+            this.btnLoadSetOfImages.Size = new System.Drawing.Size(500, 67);
             this.btnLoadSetOfImages.TabIndex = 3;
             this.btnLoadSetOfImages.Text = "Charger dossiers d\'images";
             this.btnLoadSetOfImages.UseVisualStyleBackColor = true;
@@ -74,9 +75,9 @@
             // 
             this.btnLaunchProcess.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnLaunchProcess.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLaunchProcess.Location = new System.Drawing.Point(624, 328);
+            this.btnLaunchProcess.Location = new System.Drawing.Point(1024, 528);
             this.btnLaunchProcess.Name = "btnLaunchProcess";
-            this.btnLaunchProcess.Size = new System.Drawing.Size(300, 67);
+            this.btnLaunchProcess.Size = new System.Drawing.Size(500, 67);
             this.btnLaunchProcess.TabIndex = 4;
             this.btnLaunchProcess.Text = "Et c\'est partit, let\'s go";
             this.btnLaunchProcess.UseVisualStyleBackColor = true;
@@ -84,18 +85,18 @@
             // 
             // pcbDrew
             // 
-            this.pcbDrew.Location = new System.Drawing.Point(318, 22);
+            this.pcbDrew.Location = new System.Drawing.Point(518, 22);
             this.pcbDrew.Name = "pcbDrew";
-            this.pcbDrew.Size = new System.Drawing.Size(300, 300);
+            this.pcbDrew.Size = new System.Drawing.Size(500, 500);
             this.pcbDrew.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pcbDrew.TabIndex = 5;
             this.pcbDrew.TabStop = false;
             // 
             // pcbMosaic
             // 
-            this.pcbMosaic.Location = new System.Drawing.Point(624, 22);
+            this.pcbMosaic.Location = new System.Drawing.Point(1024, 22);
             this.pcbMosaic.Name = "pcbMosaic";
-            this.pcbMosaic.Size = new System.Drawing.Size(300, 300);
+            this.pcbMosaic.Size = new System.Drawing.Size(500, 500);
             this.pcbMosaic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pcbMosaic.TabIndex = 6;
             this.pcbMosaic.TabStop = false;
@@ -104,7 +105,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(939, 400);
+            this.ClientSize = new System.Drawing.Size(1529, 679);
             this.Controls.Add(this.pcbMosaic);
             this.Controls.Add(this.pcbDrew);
             this.Controls.Add(this.btnLaunchProcess);
