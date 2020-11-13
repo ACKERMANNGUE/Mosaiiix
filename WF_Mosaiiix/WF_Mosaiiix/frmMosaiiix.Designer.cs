@@ -196,7 +196,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1067, 727);
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(1066, 721);
             this.Controls.Add(this.trbThreshold);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.nudHeight);
@@ -209,7 +210,10 @@
             this.Controls.Add(this.btnLoadSetOfImages);
             this.Controls.Add(this.btnLoadInitialImage);
             this.Controls.Add(this.pcbInitialImage);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(1082, 760);
+            this.MinimumSize = new System.Drawing.Size(1082, 760);
             this.Name = "frmMosaiiix";
             this.Text = "Mosaiiix";
             this.Load += new System.EventHandler(this.frmMosaiiix_Load);

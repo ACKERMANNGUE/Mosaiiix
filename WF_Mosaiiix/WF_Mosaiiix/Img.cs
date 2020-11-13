@@ -162,6 +162,7 @@ namespace WF_Mosaiiix
                         int averageBlue = lstBlueCells.Count > 0 ? (int)lstBlueCells.Average() : 0;
                         int averageGreen = lstGreenCells.Count > 0 ? (int)lstGreenCells.Average() : 0;
                         int averageRed = lstRedCells.Count > 0 ? (int)lstRedCells.Average() : 0;
+
                         Debug.WriteLine("Modifions cette cellule");
                         foreach (ImgInfo img in imgInfos)
                         {
@@ -199,6 +200,21 @@ namespace WF_Mosaiiix
                                     }
                                 }
                                 break;
+                            }
+                            else {
+                                for (int j = 0; j < heightCell; j++)
+                                {
+                                    for (int i = 0; i < widthCell; i++)
+                                    {
+                                        int xPos = i + (x * widthCell);
+                                        int yPos = j + (y * heightCell);
+
+                                        if (xPos < ImgModified.Width && yPos < ImgModified.Height)
+                                        {
+                                            SetPixelColor(xPos, yPos, xData, startPixel, averageBlue, averageGreen, averageRed);
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
