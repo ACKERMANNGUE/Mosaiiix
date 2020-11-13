@@ -60,6 +60,9 @@ namespace WF_Mosaiiix
         /// <summary>
         /// Import a bunch of images
         /// </summary>
+        /// <param name="widthGrid">The width of the grid</param>
+        /// <param name="heightGrid">The height of the grid</param>
+        /// <returns>True if upload went well, False if there was an error at import</returns>
         public bool UploadPictures(double widthGrid, double heightGrid)
         {
             bool res = false;
@@ -71,12 +74,15 @@ namespace WF_Mosaiiix
             {
                 int width = (int)Math.Round(Picture.Width / widthGrid);
                 int height = (int)Math.Round(Picture.Height / heightGrid);
-                imgInfos = new List<ImgInfo>();
-                foreach (string filename in open.FileNames)
+                if (width > 0 && height > 0)
                 {
-                    imgInfos.Add(new ImgInfo(filename, new Size(width, height)));
+                    imgInfos = new List<ImgInfo>();
+                    foreach (string filename in open.FileNames)
+                    {
+                        imgInfos.Add(new ImgInfo(filename, new Size(width, height)));
+                    }
+                    res = true;
                 }
-                res = true;
             }
             return res;
         }
@@ -113,10 +119,12 @@ namespace WF_Mosaiiix
         }
 
         /// <summary>
-        /// Pixelize a picture
+        /// Pixelize a picture and replaces the cells by a picture that match the average of colors
         /// </summary>
         /// <param name="sizeX">The number of cells to create at x axis</param>
         /// <param name="sizeY">The number of cells to create at y axis</param>
+        /// <param name="progress">The progress bar displayed to the user</param>
+        /// <param name="colorThreshold">The threshold of the padding matching color</param>
         public unsafe void PixelizePicture(int sizeX, int sizeY, ProgressBar progress, int colorThreshold)
         {
             ImgModified = Picture.ToBitmap();

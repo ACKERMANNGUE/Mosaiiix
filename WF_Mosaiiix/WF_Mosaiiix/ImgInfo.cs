@@ -35,7 +35,9 @@ namespace WF_Mosaiiix
             Pic = new Bitmap(Image.FromFile(pPath), pSize);
             SetAverageOfColors();
         }
-
+        /// <summary>
+        /// Set the average of colors for a picture
+        /// </summary>
         public unsafe void SetAverageOfColors()
         {
             xData = Pic.LockBits(

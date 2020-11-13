@@ -69,5 +69,23 @@ namespace WF_Mosaiiix.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream process_done {
+            get {
+                return ResourceManager.GetStream("process_done", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.IO.UnmanagedMemoryStream semblable à System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream start_process {
+            get {
+                return ResourceManager.GetStream("start_process", resourceCulture);
+            }
+        }
     }
 }

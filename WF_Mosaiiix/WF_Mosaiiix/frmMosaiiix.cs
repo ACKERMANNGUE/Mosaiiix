@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 using Emgu;
 using Emgu.CV;
@@ -18,6 +19,8 @@ namespace WF_Mosaiiix
     public partial class frmMosaiiix : Form
     {
         Img image;
+        SoundPlayer spStartProcess;
+        SoundPlayer spProcessDone;
 
         public frmMosaiiix()
         {
@@ -29,13 +32,15 @@ namespace WF_Mosaiiix
             if (image.UploadPicture())
             {
                 btnLoadSetOfImages.Enabled = true;
+                pcbInitialImage.Image = image.Picture.ToBitmap();
+                pgbProgress.Maximum = image.Picture.Width * image.Picture.Height;
             }
-            pcbInitialImage.Image = image.Picture.ToBitmap();
-            pgbProgress.Maximum = image.Picture.Width * image.Picture.Height;
         }
 
         private void frmMosaiiix_Load(object sender, EventArgs e)
         {
+            spStartProcess = new SoundPlayer(Properties.Resources.start_process);
+            spProcessDone = new SoundPlayer(Properties.Resources.process_done);
             image = new Img();
             btnLoadSetOfImages.Enabled = false;
             btnSaveMosaic.Enabled = false;
@@ -44,10 +49,11 @@ namespace WF_Mosaiiix
 
         private void btnLaunchProcess_Click(object sender, EventArgs e)
         {
-            pcbDrew.Image = null;
+            spStartProcess.Play();
             image.PixelizePicture((int)nudWidth.Value, (int)nudHeight.Value, pgbProgress, trbThreshold.Value);
             pcbDrew.Image = image.ImgModified;
             btnSaveMosaic.Enabled = true;
+            spProcessDone.Play();
         }
 
         private void btnLoadSetOfImages_Click(object sender, EventArgs e)
