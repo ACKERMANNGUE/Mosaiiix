@@ -127,7 +127,7 @@
             0});
             this.nudWidth.Location = new System.Drawing.Point(64, 38);
             this.nudWidth.Maximum = new decimal(new int[] {
-            250,
+            1000,
             0,
             0,
             0});
@@ -168,7 +168,7 @@
             0});
             this.nudHeight.Location = new System.Drawing.Point(64, 12);
             this.nudHeight.Maximum = new decimal(new int[] {
-            250,
+            1000,
             0,
             0,
             0});
@@ -210,6 +210,7 @@
             this.Controls.Add(this.btnLoadSetOfImages);
             this.Controls.Add(this.btnLoadInitialImage);
             this.Controls.Add(this.pcbInitialImage);
+            this.ForeColor = System.Drawing.SystemColors.InfoText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(1082, 760);

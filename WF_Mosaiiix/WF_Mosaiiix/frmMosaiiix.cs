@@ -33,7 +33,7 @@ namespace WF_Mosaiiix
             {
                 btnLoadSetOfImages.Enabled = true;
                 pcbInitialImage.Image = image.Picture.ToBitmap();
-                pgbProgress.Maximum = image.Picture.Width * image.Picture.Height;
+                pgbProgress.Maximum =  image.Picture.Height;
             }
         }
 

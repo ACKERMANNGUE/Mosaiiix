@@ -128,8 +128,10 @@ namespace WF_Mosaiiix
         public unsafe void PixelizePicture(int sizeX, int sizeY, ProgressBar progress, int colorThreshold)
         {
             ImgModified = Picture.ToBitmap();
-            int widthCell = (int)Math.Round((double)ImgModified.Width / sizeX);
-            int heightCell = (int)Math.Round((double)ImgModified.Height / sizeY);
+            int imgWidth = ImgModified.Width;
+            int imgHeight = ImgModified.Height;
+            int widthCell = (int)Math.Round((double)imgWidth / sizeX);
+            int heightCell = (int)Math.Round((double)imgHeight / sizeY);
 
             progress.Value = 0;
 
@@ -144,6 +146,16 @@ namespace WF_Mosaiiix
 
                 for (int y = 0; y < sizeY; y++)
                 {
+                    if (progress.Value < progress.Maximum)
+                    {
+
+                        progress.Value++;
+                    }
+                    else
+                    {
+                        progress.Value = progress.Maximum;
+                    }
+
                     for (int x = 0; x < sizeX; x++)
                     {
                         List<int> lstBlueCells = new List<int>();
@@ -158,7 +170,7 @@ namespace WF_Mosaiiix
                                 int xPos = i + (x * widthCell);
                                 int yPos = j + (y * heightCell);
 
-                                if (xPos < ImgModified.Width && yPos < ImgModified.Height)
+                                if (xPos < imgWidth && yPos < imgHeight)
                                 {
                                     lstBlueCells.Add(GetPixelColor(xPos, yPos, xData, startPixel).B);
                                     lstGreenCells.Add(GetPixelColor(xPos, yPos, xData, startPixel).G);
@@ -184,20 +196,12 @@ namespace WF_Mosaiiix
                                 {
                                     for (int i = 0; i < widthCell; i++)
                                     {
-                                        if (progress.Value < progress.Maximum)
-                                        {
-
-                                            progress.Value++;
-                                        }
-                                        else
-                                        {
-                                            progress.Value = progress.Maximum;
-                                        }
+                                        
 
                                         int xPos = i + (x * widthCell);
                                         int yPos = j + (y * heightCell);
 
-                                        if (xPos < ImgModified.Width && yPos < ImgModified.Height)
+                                        if (xPos < imgWidth && yPos < imgHeight)
                                         {
                                             Color c = img.Pic.GetPixel(i, j);
                                             int b = c.B;
@@ -217,7 +221,7 @@ namespace WF_Mosaiiix
                                         int xPos = i + (x * widthCell);
                                         int yPos = j + (y * heightCell);
 
-                                        if (xPos < ImgModified.Width && yPos < ImgModified.Height)
+                                        if (xPos < imgWidth && yPos < imgHeight)
                                         {
                                             SetPixelColor(xPos, yPos, xData, startPixel, averageBlue, averageGreen, averageRed);
                                         }
