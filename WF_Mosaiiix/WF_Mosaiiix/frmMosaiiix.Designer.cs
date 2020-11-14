@@ -127,7 +127,7 @@
             0});
             this.nudWidth.Location = new System.Drawing.Point(64, 38);
             this.nudWidth.Maximum = new decimal(new int[] {
-            1000,
+            99999,
             0,
             0,
             0});
@@ -168,7 +168,7 @@
             0});
             this.nudHeight.Location = new System.Drawing.Point(64, 12);
             this.nudHeight.Maximum = new decimal(new int[] {
-            1000,
+            99999,
             0,
             0,
             0});

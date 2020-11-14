@@ -34,7 +34,10 @@ namespace WF_Mosaiiix
                 btnLoadSetOfImages.Enabled = true;
                 pcbInitialImage.Image = image.Picture.ToBitmap();
                 pgbProgress.Maximum =  image.Picture.Height;
+                nudWidth.Value = image.Picture.Width / 2;
+                nudHeight.Value = image.Picture.Height / 2;
             }
+           
         }
 
         private void frmMosaiiix_Load(object sender, EventArgs e)
@@ -61,6 +64,10 @@ namespace WF_Mosaiiix
             if (image.UploadPictures((double)nudWidth.Value, (double)nudHeight.Value))
             {
                 btnLaunchProcess.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("Il ne peut y avoir plus de cellules que de pixels dans l'image... Veuillez revérifier les valeurs de Hauteurs et Largeurs");
             }
         }
 
