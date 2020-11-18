@@ -1,4 +1,10 @@
-﻿using System;
+﻿///file frmMosaiiix.cs
+///brief Class that represent that link the view with the model
+///version 1.0
+///author Ackermann Gawen
+///date 18.11.2020
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,6 +27,8 @@ namespace WF_Mosaiiix
 {
     public partial class frmMosaiiix : Form
     {
+        private const int SCALE_VIDEO_SIZE = 4;
+        private const int SCALE_PICTURE_SIZE = 2;
         Img image;
         SoundPlayer spStartProcess;
         SoundPlayer spProcessDone;
@@ -37,8 +45,8 @@ namespace WF_Mosaiiix
                 btnLoadSetOfImages.Enabled = true;
                 pcbInitialImage.Image = image.Picture.ToBitmap();
                 pgbProgress.Maximum = image.Picture.Height;
-                nudWidth.Value = image.Picture.Width / 2;
-                nudHeight.Value = image.Picture.Height / 2;
+                nudWidth.Value = image.Picture.Width / SCALE_PICTURE_SIZE;
+                nudHeight.Value = image.Picture.Height / SCALE_PICTURE_SIZE;
             }
 
         }
@@ -57,6 +65,7 @@ namespace WF_Mosaiiix
         {
             spStartProcess.Play();
             List<ImgInfo> newImgInfos = new List<ImgInfo>();
+            //resize the pictures to fit the cells
             foreach (ImgInfo img in image.ImgInfos)
             {
                 newImgInfos.Add(new ImgInfo(img.Filename, new Size((int)(image.Picture.Width / nudWidth.Value), (int)(image.Picture.Height / nudHeight.Value))));
@@ -93,6 +102,7 @@ namespace WF_Mosaiiix
 
         private void ComputeVideo()
         {
+            spStartProcess.Play();
             OpenFileDialog videoFile = new OpenFileDialog();
             // image filters  
             videoFile.Filter = "Video Files(*.mp4; *.avi; *.wmv; *.webm; *.gif;)|*.mp4; *.avi; *.wmv; *.webm; *.gif;";
@@ -105,6 +115,9 @@ namespace WF_Mosaiiix
 
             using (VideoCapture video = new VideoCapture(filename))
             {
+                nudWidth.Value = video.Width / SCALE_VIDEO_SIZE;
+                nudHeight.Value = video.Height / SCALE_VIDEO_SIZE;
+
                 image.UploadPictures((double)nudWidth.Value, (double)nudHeight.Value, video.Width, video.Height);
 
                 int totalFrames = (int)video.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount);
@@ -129,6 +142,7 @@ namespace WF_Mosaiiix
                     }
                 }
             }
+            spProcessDone.Play();
         }
     }
 }

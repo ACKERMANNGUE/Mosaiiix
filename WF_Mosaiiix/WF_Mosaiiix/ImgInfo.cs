@@ -1,4 +1,10 @@
-﻿using System;
+﻿///file ImgInfo.cs
+///brief Class that represent an image his average of red, green and blue
+///version 1.0
+///author Ackermann Gawen
+///date 18.11.2020
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;

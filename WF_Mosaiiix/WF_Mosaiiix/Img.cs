@@ -1,4 +1,10 @@
-﻿using System;
+﻿///file Img.cs
+///brief Class that represent an image and the treatment that goes along with
+///version 1.0
+///author Ackermann Gawen
+///date 18.11.2020
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
@@ -40,12 +46,12 @@ namespace WF_Mosaiiix
         }
         public Img(Image<Bgr, byte> pImg) : this(pImg, null)
         {
-
+            //no code here
         }
 
         public Img() : this(null, null)
         {
-
+            //no code here
         }
 
         /// <summary>
@@ -81,6 +87,7 @@ namespace WF_Mosaiiix
             open.Multiselect = true;
             if (open.ShowDialog() == DialogResult.OK)
             {
+                //resize the picture to fit a cell
                 int width = (int)Math.Round(widthPicture / widthGrid);
                 int height = (int)Math.Round(heightPicture / heightGrid);
                 if (width > 0 && height > 0)
