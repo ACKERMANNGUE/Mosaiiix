@@ -72,7 +72,7 @@ namespace WF_Mosaiiix
             }
             image.ImgInfos = newImgInfos;
             image.PixelizePicture((int)nudWidth.Value, (int)nudHeight.Value, pgbProgress, trbThreshold.Value);
-            
+
             pcbDrew.Image = image.ImgModified;
             btnSaveMosaic.Enabled = true;
             spProcessDone.Play();
@@ -122,23 +122,26 @@ namespace WF_Mosaiiix
 
                 int totalFrames = (int)video.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount);
                 int actualFrame = 0;
-                using (VideoWriter vw = new VideoWriter(filename + "_converted.mp4", (int)video.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FourCC),
-                    (int)video.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Fps), new Size(video.Width, video.Height), true))
+                if (filename.Length > 0)
                 {
-
-                    Mat m = new Mat();
-                    while (actualFrame <= totalFrames)
+                    using (VideoWriter vw = new VideoWriter(filename + "_converted.mp4", (int)video.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FourCC),
+                        (int)video.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Fps), new Size(video.Width, video.Height), true))
                     {
-                        video.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, actualFrame);
-                        video.Read(m);
 
-                        Img i = new Img(m.ToImage<Bgr, Byte>(), image.ImgInfos);
-                        if (i.PixelizePicture((int)nudWidth.Value, (int)nudHeight.Value, pgbProgress, trbThreshold.Value) && i.ImgModified != null)
+                        Mat m = new Mat();
+                        while (actualFrame <= totalFrames)
                         {
-                            m = i.ImgModified.ToImage<Bgr, byte>().Mat;
-                            vw.Write(m);
+                            video.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, actualFrame);
+                            video.Read(m);
+
+                            Img i = new Img(m.ToImage<Bgr, Byte>(), image.ImgInfos);
+                            if (i.PixelizePicture((int)nudWidth.Value, (int)nudHeight.Value, pgbProgress, trbThreshold.Value) && i.ImgModified != null)
+                            {
+                                m = i.ImgModified.ToImage<Bgr, byte>().Mat;
+                                vw.Write(m);
+                            }
+                            actualFrame += 1;
                         }
-                        actualFrame += 1;
                     }
                 }
             }
