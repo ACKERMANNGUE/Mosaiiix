@@ -23,3 +23,7 @@ C:\Users\admin\Desktop\Mosaiiix\WF_Mosaiiix\WF_Mosaiiix\bin\x64\Release\Emgu.CV.
 C:\Users\admin\Desktop\Mosaiiix\WF_Mosaiiix\WF_Mosaiiix\obj\x64\Release\WF_Mosaiiix.csproj.CopyComplete
 C:\Users\admin\Desktop\Mosaiiix\WF_Mosaiiix\WF_Mosaiiix\obj\x64\Release\WF_Mosaiiix.exe
 C:\Users\admin\Desktop\Mosaiiix\WF_Mosaiiix\WF_Mosaiiix\obj\x64\Release\WF_Mosaiiix.pdb
+C:\Users\admin\Desktop\Mosaiiix\WF_Mosaiiix\WF_Mosaiiix\bin\x64\Release\Newtonsoft.Json.dll
+C:\Users\admin\Desktop\Mosaiiix\WF_Mosaiiix\WF_Mosaiiix\bin\x64\Release\Xabe.FFmpeg.dll
+C:\Users\admin\Desktop\Mosaiiix\WF_Mosaiiix\WF_Mosaiiix\bin\x64\Release\Newtonsoft.Json.xml
+C:\Users\admin\Desktop\Mosaiiix\WF_Mosaiiix\WF_Mosaiiix\bin\x64\Release\Xabe.FFmpeg.xml

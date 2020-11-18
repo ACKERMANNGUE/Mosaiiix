@@ -41,6 +41,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.nudHeight = new System.Windows.Forms.NumericUpDown();
             this.trbThreshold = new System.Windows.Forms.TrackBar();
+            this.btnLoadVideo = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pcbInitialImage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pcbDrew)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudWidth)).BeginInit();
@@ -62,7 +63,7 @@
             this.btnLoadInitialImage.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnLoadInitialImage.Location = new System.Drawing.Point(14, 569);
             this.btnLoadInitialImage.Name = "btnLoadInitialImage";
-            this.btnLoadInitialImage.Size = new System.Drawing.Size(500, 67);
+            this.btnLoadInitialImage.Size = new System.Drawing.Size(244, 67);
             this.btnLoadInitialImage.TabIndex = 3;
             this.btnLoadInitialImage.Text = "Charger Image de base";
             this.btnLoadInitialImage.UseVisualStyleBackColor = true;
@@ -192,12 +193,24 @@
             this.trbThreshold.TabIndex = 2;
             this.trbThreshold.Value = 64;
             // 
+            // btnLoadVideo
+            // 
+            this.btnLoadVideo.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnLoadVideo.Location = new System.Drawing.Point(270, 569);
+            this.btnLoadVideo.Name = "btnLoadVideo";
+            this.btnLoadVideo.Size = new System.Drawing.Size(244, 67);
+            this.btnLoadVideo.TabIndex = 12;
+            this.btnLoadVideo.Text = "Charger une vidéo ainsi qu\'un dossier d\'images";
+            this.btnLoadVideo.UseVisualStyleBackColor = true;
+            this.btnLoadVideo.Click += new System.EventHandler(this.btnLoadVideo_Click);
+            // 
             // frmMosaiiix
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1066, 721);
+            this.Controls.Add(this.btnLoadVideo);
             this.Controls.Add(this.trbThreshold);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.nudHeight);
@@ -241,6 +254,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown nudHeight;
         private System.Windows.Forms.TrackBar trbThreshold;
+        private System.Windows.Forms.Button btnLoadVideo;
     }
 }
 

@@ -48,3 +48,7 @@ C:\Users\admin\Desktop\Mosaiiix\WF_Mosaiiix\WF_Mosaiiix\obj\x64\Debug\WF_Mosaiii
 C:\Users\admin\Desktop\Mosaiiix\WF_Mosaiiix\WF_Mosaiiix\obj\x64\Debug\WF_Mosaiiix.csproj.CopyComplete
 C:\Users\admin\Desktop\Mosaiiix\WF_Mosaiiix\WF_Mosaiiix\obj\x64\Debug\WF_Mosaiiix.exe
 C:\Users\admin\Desktop\Mosaiiix\WF_Mosaiiix\WF_Mosaiiix\obj\x64\Debug\WF_Mosaiiix.pdb
+C:\Users\admin\Desktop\Mosaiiix\WF_Mosaiiix\WF_Mosaiiix\bin\x64\Debug\Newtonsoft.Json.dll
+C:\Users\admin\Desktop\Mosaiiix\WF_Mosaiiix\WF_Mosaiiix\bin\x64\Debug\Xabe.FFmpeg.dll
+C:\Users\admin\Desktop\Mosaiiix\WF_Mosaiiix\WF_Mosaiiix\bin\x64\Debug\Newtonsoft.Json.xml
+C:\Users\admin\Desktop\Mosaiiix\WF_Mosaiiix\WF_Mosaiiix\bin\x64\Debug\Xabe.FFmpeg.xml
