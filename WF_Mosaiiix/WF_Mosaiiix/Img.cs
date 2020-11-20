@@ -88,8 +88,9 @@ namespace WF_Mosaiiix
             if (open.ShowDialog() == DialogResult.OK)
             {
                 //resize the picture to fit a cell
-                int width = (int)Math.Round(widthPicture / widthGrid);
-                int height = (int)Math.Round(heightPicture / heightGrid);
+                int width = (int)Math.Round(widthGrid);
+                int height = (int)Math.Round(heightGrid);
+
                 if (width > 0 && height > 0)
                 {
                     imgInfos = new List<ImgInfo>();
@@ -140,12 +141,14 @@ namespace WF_Mosaiiix
         /// <param name="sizeX">The number of cells to create at x axis</param>
         /// <param name="sizeY">The number of cells to create at y axis</param>
         /// <param name="progress">The progress bar displayed to the user</param>
-        /// <param name="colorThreshold">The threshold of the padding matching color</param>
-        public unsafe bool PixelizePicture(int sizeX, int sizeY, ProgressBar progress, int colorThreshold)
+        /// <param name="colorThresholdRed">The red threshold</param>
+        /// <param name="colorThresholdGreen">The blue threshold</param>
+        /// <param name="colorThresholdBlue">The green threshold</param>
+        /// <returns></returns>
+        public unsafe bool PixelizePicture(int sizeX, int sizeY, ProgressBar progress, int colorThresholdRed, int colorThresholdGreen, int colorThresholdBlue)
         {
             if (Picture.Width > 0 && Picture.Height > 0)
             {
-
                 ImgModified = Picture.ToBitmap();
                 int imgWidth = ImgModified.Width;
                 int imgHeight = ImgModified.Height;
@@ -206,9 +209,9 @@ namespace WF_Mosaiiix
                             foreach (ImgInfo img in imgInfos)
                             {
                                 Debug.WriteLine("L'image : " + img.Filename + " est-elle bonne ?");
-                                if ((averageBlue + colorThreshold > img.B && averageBlue - colorThreshold < img.B) &&
-                                                (averageGreen + colorThreshold > img.G && averageGreen - colorThreshold < img.G) &&
-                                                (averageRed + colorThreshold > img.R && averageRed - colorThreshold < img.R))
+                                if ((averageBlue + colorThresholdBlue > img.B && averageBlue - colorThresholdBlue < img.B) &&
+                                                (averageGreen + colorThresholdGreen > img.G && averageGreen - colorThresholdGreen < img.G) &&
+                                                (averageRed + colorThresholdRed > img.R && averageRed - colorThresholdRed < img.R))
                                 {
                                     Debug.WriteLine("elle l'est");
                                     for (int j = 0; j < heightCell; j++)

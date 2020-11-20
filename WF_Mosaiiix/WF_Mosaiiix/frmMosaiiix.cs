@@ -33,24 +33,11 @@ namespace WF_Mosaiiix
         SoundPlayer spStartProcess;
         SoundPlayer spProcessDone;
 
+
         public frmMosaiiix()
         {
             InitializeComponent();
         }
-
-        private void btnLoadInitialImage_Click(object sender, EventArgs e)
-        {
-            if (image.UploadPicture())
-            {
-                btnLoadSetOfImages.Enabled = true;
-                pcbInitialImage.Image = image.Picture.ToBitmap();
-                pgbProgress.Maximum = image.Picture.Height;
-                nudWidth.Value = image.Picture.Width / SCALE_PICTURE_SIZE;
-                nudHeight.Value = image.Picture.Height / SCALE_PICTURE_SIZE;
-            }
-
-        }
-
         private void frmMosaiiix_Load(object sender, EventArgs e)
         {
             spStartProcess = new SoundPlayer(Properties.Resources.start_process);
@@ -59,28 +46,55 @@ namespace WF_Mosaiiix
             btnLoadSetOfImages.Enabled = false;
             btnSaveMosaic.Enabled = false;
             btnLaunchProcess.Enabled = false;
+            lblNbFrames.Enabled = false;
+        }
+
+        private void btnLoadInitialImage_Click(object sender, EventArgs e)
+        {
+            if (image.UploadPicture())
+            {
+                btnLoadSetOfImages.Enabled = true;
+                pcbInitialImage.Image = image.Picture.ToBitmap();
+
+                pgbProgress.Maximum = image.Picture.Height;
+
+                nudImgWidth.Value = image.Picture.Width;
+                NudImgHeight.Value = image.Picture.Height;
+
+                nudGridWidth.Value = image.Picture.Width / nudScaleWidth.Value;
+                nudGridHeight.Value = image.Picture.Height / nudScaleHeight.Value;
+            }
+
+
         }
 
         private void btnLaunchProcess_Click(object sender, EventArgs e)
         {
             spStartProcess.Play();
             List<ImgInfo> newImgInfos = new List<ImgInfo>();
+
             //resize the pictures to fit the cells
             foreach (ImgInfo img in image.ImgInfos)
             {
-                newImgInfos.Add(new ImgInfo(img.Filename, new Size((int)(image.Picture.Width / nudWidth.Value), (int)(image.Picture.Height / nudHeight.Value))));
+                int width = (int)(image.Picture.Width / nudGridWidth.Value);
+                int height = (int)(image.Picture.Height / nudGridHeight.Value);
+                newImgInfos.Add(new ImgInfo(img.Filename, new Size(width, height)));
             }
+
             image.ImgInfos = newImgInfos;
-            image.PixelizePicture((int)nudWidth.Value, (int)nudHeight.Value, pgbProgress, trbThreshold.Value);
+            image.PixelizePicture((int)nudGridWidth.Value, (int)nudGridHeight.Value, pgbProgress, trbThresholdRed.Value, trbThresholdGreen.Value, trbThersholdBlue.Value);
 
             pcbDrew.Image = image.ImgModified;
             btnSaveMosaic.Enabled = true;
             spProcessDone.Play();
+
+            lblNbFrames.Enabled = true;
+            lblNbFrames.Text = "Frame 1 on 1";
         }
 
         private void btnLoadSetOfImages_Click(object sender, EventArgs e)
         {
-            if (image.UploadPictures((double)nudWidth.Value, (double)nudHeight.Value, image.Picture.Width, image.Picture.Height))
+            if (image.UploadPictures((double)nudGridWidth.Value, (double)nudGridHeight.Value, image.Picture.Width, image.Picture.Height))
             {
                 btnLaunchProcess.Enabled = true;
             }
@@ -98,6 +112,7 @@ namespace WF_Mosaiiix
         private void btnLoadVideo_Click(object sender, EventArgs e)
         {
             ComputeVideo();
+            lblNbFrames.Enabled = true;
         }
 
         private void ComputeVideo()
@@ -115,37 +130,55 @@ namespace WF_Mosaiiix
 
             using (VideoCapture video = new VideoCapture(filename))
             {
-                nudWidth.Value = video.Width / SCALE_VIDEO_SIZE;
-                nudHeight.Value = video.Height / SCALE_VIDEO_SIZE;
-
-                image.UploadPictures((double)nudWidth.Value, (double)nudHeight.Value, video.Width, video.Height);
+                nudGridWidth.Value = video.Width / nudScaleWidth.Value;
+                nudGridHeight.Value = video.Height / nudScaleHeight.Value;
+                //to avoid exception of unexisting size for the picture
+                image.Picture = new Image<Bgr, byte>(new Size(video.Width, video.Height));
+                image.UploadPictures((double)nudScaleHeight.Value, (double)nudScaleWidth.Value, video.Width, video.Height);
 
                 int totalFrames = (int)video.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount);
                 int actualFrame = 0;
-                if (filename.Length > 0)
+                lblNbFrames.Text = $"Frame 1 on {totalFrames}";
+
+                using (VideoWriter vw = new VideoWriter(filename + "_converted.mp4", (int)video.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FourCC),
+                    (int)video.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Fps), new Size(video.Width, video.Height), true))
                 {
-                    using (VideoWriter vw = new VideoWriter(filename + "_converted.mp4", (int)video.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FourCC),
-                        (int)video.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.Fps), new Size(video.Width, video.Height), true))
+
+                    Mat m = new Mat();
+                    while (actualFrame <= totalFrames)
                     {
+                        lblNbFrames.Text = $"Frame {actualFrame} on {totalFrames}";
+                        lblNbFrames.Refresh();
 
-                        Mat m = new Mat();
-                        while (actualFrame <= totalFrames)
+                        video.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, actualFrame);
+                        video.Read(m);
+
+                        pcbInitialImage.Image = m.ToBitmap();
+                        pcbInitialImage.Refresh();
+
+                        Img i = new Img(m.ToImage<Bgr, Byte>(), image.ImgInfos);
+                        if (i.PixelizePicture((int)nudGridWidth.Value, (int)nudGridHeight.Value, pgbProgress, trbThresholdRed.Value, trbThresholdGreen.Value, trbThersholdBlue.Value) && i.ImgModified != null)
                         {
-                            video.SetCaptureProperty(Emgu.CV.CvEnum.CapProp.PosFrames, actualFrame);
-                            video.Read(m);
-
-                            Img i = new Img(m.ToImage<Bgr, Byte>(), image.ImgInfos);
-                            if (i.PixelizePicture((int)nudWidth.Value, (int)nudHeight.Value, pgbProgress, trbThreshold.Value) && i.ImgModified != null)
-                            {
-                                m = i.ImgModified.ToImage<Bgr, byte>().Mat;
-                                vw.Write(m);
-                            }
-                            actualFrame += 1;
+                            m = i.ImgModified.ToImage<Bgr, byte>().Mat;
+                            vw.Write(m);
+                            pcbDrew.Image = m.ToBitmap();
+                            pcbDrew.Refresh();
                         }
+                        actualFrame += 1;
                     }
                 }
             }
             spProcessDone.Play();
+        }
+
+        private void nudScaleWidth_ValueChanged(object sender, EventArgs e)
+        {
+            nudGridWidth.Value = image.Picture.Width / nudScaleWidth.Value;
+        }
+
+        private void nudScaleHeight_ValueChanged(object sender, EventArgs e)
+        {
+            nudGridHeight.Value = image.Picture.Height / nudScaleHeight.Value;
         }
     }
 }
